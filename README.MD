@@ -1,3 +1,2 @@
-### Node CRUD API (Nodejs)
+### Nodejs (Express) CRUD API with adminBro admin panel
 
-Added adminBro admin panel
