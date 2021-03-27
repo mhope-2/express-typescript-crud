@@ -1,6 +1,9 @@
 const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv');
+var flash = require('connect-flash');
+var session = require('express-session');
+
 
 
 // get env variables
@@ -14,8 +17,15 @@ connectDB()
 
 
 const app = express()
+app.use(flash());
 app.use(cors());
 app.use(express.json());
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }))
 
 // routes
 const exercisesRouter = require('./routes/exercises.route');

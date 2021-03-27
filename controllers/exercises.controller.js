@@ -1,4 +1,6 @@
 const Exercise = require("../models/exercise.model");
+const jwt = require('jsonwebtoken')
+
 
 // list all exercises
 exports.exerciseList = async (req, res) => {

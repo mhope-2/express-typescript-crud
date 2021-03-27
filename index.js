@@ -14,7 +14,7 @@ AdminBro.registerAdapter(AdminBroMongoose)
 
 
 const run = async () => {
-  const connection = await mongoose.connect(YOUR_ATLAS_URI, {
+  const connection = await mongoose.connect(process.env.ATLAS_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

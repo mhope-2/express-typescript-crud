@@ -81,9 +81,14 @@ exports.registerUser = async (req, res, next) => {
 }
 
 exports.loginUser = (req, res, next) => {
-  const { email, password } = req.body;
 
-  User.findOne({ email }).then((user) => {
+  if (!req.body.username || !req.body.password){
+      res.json({"Response":"Login using username and password"})
+  } else{
+
+  var { username, password } = req.body;
+
+  User.findOne({ username }).then((user) => {
     if (user) {
       bcrypt.compare(password, user.password, (err, isMatch) => {
 
@@ -96,19 +101,18 @@ exports.loginUser = (req, res, next) => {
               expires: new Date(Date.now() + 604800),
               httpOnly: true
             });
-            res.render("admin", { userObj });
+            res.json({"user":userObj, "status code":"200" });
         }
         else{
-          req.flash("error_msg", "Wrong Password");
-          res.redirect('/');
+          res.json({"error_msg":"Wrong Password"});
         }
       });
     } else {
-      req.flash("error_msg","User does not exist");
-      res.redirect('/');
+      res.json({"error_msg":"User does not exist"});
     }
   });
 };
+}
 
 exports.refresh = (req, res, next) => {
   const refreshCookie = req.headers.cookie;
@@ -151,7 +155,7 @@ exports.refresh = (req, res, next) => {
 
 exports.logout = (req, res, next) => {
 
-  req.flash("success_msg","Logged Out");
+  req.json({"success_msg":"Logged Out"});
     res.cookie("JWT_REFRESH", "Logged Out", {
       expires: new Date(Date.now() + 604800),
       httpOnly: true,
