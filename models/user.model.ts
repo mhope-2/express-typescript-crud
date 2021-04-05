@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose'
+import UserInterface from '../interfaces/user.interface';
 
 const UserSchema = new mongoose.Schema({
     email: {
@@ -24,5 +25,6 @@ const UserSchema = new mongoose.Schema({
   {timestamps:true}
 )
 
-
-module.exports = mongoose.model('User',UserSchema);
+const UserModel = mongoose.model<UserInterface & mongoose.Document>('User',UserSchema)
+ 
+export default UserModel
