@@ -51,8 +51,8 @@ exports.registerUser = async (req, res, next) => {
           role
         })
 
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
+         bcrypt.genSalt(10, (err, salt) => {
+           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
 
             newUser.password = hash;

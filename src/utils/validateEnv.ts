@@ -7,7 +7,8 @@ import { cleanEnv, str, port } from 'envalid';
       JWT_EXPIRES: str(),
       JWT_REFRESH_SECRET: str(),
       JWT_REFRESH_EXPIRES: str(),
-      PORT: port()
+      PORT: port(),
+      SESSION_SECRET: str()
     });
   }
 

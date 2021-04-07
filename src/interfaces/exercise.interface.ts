@@ -1,7 +1,7 @@
 interface ExerciseInterface {
-    username: String,
-    description: String,
-    duration: Number,
+    username: string,
+    description: string,
+    duration: number,
     date: Date
 }
 

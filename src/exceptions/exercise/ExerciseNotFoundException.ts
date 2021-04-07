@@ -1,4 +1,4 @@
-import HttpException from "./HttpException";
+import HttpException from "../http/HttpException";
  
 class ExerciseNotFoundException extends HttpException {
   constructor(id: string) {

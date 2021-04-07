@@ -1,12 +1,12 @@
 // import * as bodyParser from 'body-parser';
 import express from 'express';
-// import * as mongoose from 'mongoose';
-const mongoose = require('mongoose')
 import cors from 'cors'
 import session from 'express-session'
 import Controller from './interfaces/controller.interface';
 import errorMiddleware from './middleware/error.middleware';
 
+const cookieParser = require('cookie-parser')  
+const mongoose = require('mongoose')
 
 class App {
   public app: express.Application;
@@ -31,9 +31,10 @@ class App {
   // init middleware
   private initializeMiddleware() {
     this.app.use(express.json())
+    this.app.use(cookieParser())
     this.app.use(cors())
     this.app.use(session({
-        secret: 'keyboard cat',
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
         cookie: { secure: true }

@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken')
-import * as express from 'express'
+import express from 'express'
 import Controller from '../interfaces/controller.interface'
 import ExerciseInterface from '../interfaces/exercise.interface'
 import ExerciseModel from '../models/exercise.model'
-import HttpException from '../exceptions/HttpException'
-import ExerciseNotFoundException from '../exceptions/ExerciseNotFoundException' 
-
+import HttpException from '../exceptions/http/HttpException'
+import ExerciseNotFoundException from '../exceptions/exercise/ExerciseNotFoundException' 
+import CreateExerciseDto from '../exercise/exercise.dto'
+import validationMiddleware from '../middleware/validation.middleware'
+import authMiddleware from '../middleware/auth.middleware';
 
 
 class ExerciseController implements Controller {
@@ -16,13 +18,16 @@ class ExerciseController implements Controller {
     constructor() {
       this.initializeRoutes()
     }
+
+
    
     private initializeRoutes() {
       this.router.get(this.path, this.exerciseList);
-      this.router.post(`${this.path}/add`, this.addExercise);
       this.router.get(`${this.path}/:id`, this.findExerciseById);
-      this.router.patch(`${this.path}/update/:id`, this.updateExerciseById);
-      this.router.delete(`${this.path}/delete`, this.deleteExerciseById);
+      this.router.post(`${this.path}/add`, authMiddleware, validationMiddleware(CreateExerciseDto), this.addExercise);
+      this.router.patch(`${this.path}/update/:id`, authMiddleware, this.updateExerciseById);
+      this.router.delete(`${this.path}/delete`, authMiddleware, this.deleteExerciseById);
+      this.router.post(`${this.path}/logout`, this.loggingOut);
     }
    
 
@@ -36,10 +41,10 @@ class ExerciseController implements Controller {
    
     // add exercise
     private addExercise = async (req:express.Request, res:express.Response) => {
-      const addExerciseData : ExerciseInterface = req.body
+      const addExerciseData : CreateExerciseDto= req.body
       const newExercise = new this.exercise(addExerciseData)
       
-      newExercise.save()
+      const saveNewExercise = await newExercise.save()
       .then(() => res.json({"Response":`Exercise ${addExerciseData.description} added for ${addExerciseData.username}`}))
       .catch(err => res.status(400).json('Error: ' + err));
   }
@@ -88,6 +93,12 @@ class ExerciseController implements Controller {
             next(new ExerciseNotFoundException(id));
           }
         })
+    }
+
+    // logging out
+    private loggingOut = (req: express.Request, res: express.Response) => {
+        res.setHeader('Set-Cookie', ['Authorization=;Max-age=0']);
+        res.json({"Response":"Logged out successfully"});
     }
 
   // class end
