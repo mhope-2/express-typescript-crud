@@ -8,13 +8,13 @@
 
 - If you have `yarn` installed, run `yarn` in your terminal.
 - After installation, run `yarn start` in your terminal.
-- Your application should be live by default on `localhost:5000`
+- Your application should be live on the port specified in your `.env` file
 
 ### NPM Users
 
 - If you have `npm` installed, run `npm install` in your terminal to install all deps
 - After installation, run `npm start` in your terminal.
-- Your application should be live by default on `localhost:5000`
+- Your application should be live on the port specified in your `.env` file
 
 ## To run tests
 
