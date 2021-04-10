@@ -6,6 +6,7 @@
   "scripts": {
     "watch-ts": "tsc -w",
     "start": "nodemon ./src/server.ts",
+    "lint": "eslint.js",
     "build": "tsc --project ./",
     "test": "jest --coverage"
   },

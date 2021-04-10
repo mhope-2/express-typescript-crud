@@ -66,6 +66,7 @@ class AuthenticationController implements Controller {
       }
       }
 
+
       // login middleware
       private loggingIn = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
         const logInData: LogInDto = req.body;
@@ -87,6 +88,10 @@ class AuthenticationController implements Controller {
         return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
       }
 
+      get getCookie(){
+        return this.createCookie
+      }
+
     // create token
       private createToken(user): TokenData {
         const expiresIn = 15 * 60
@@ -105,4 +110,3 @@ class AuthenticationController implements Controller {
 }    
 
 export default AuthenticationController
-
