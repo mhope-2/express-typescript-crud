@@ -1,7 +1,6 @@
 import TokenData from '../interfaces/tokenData.interface';
 import AuthenticationController from '../controllers/authentication.controller';
 
-
 // Testing Cookie creation
 describe('The AuthenticationService', () => {
     const authenticationController = new AuthenticationController();
